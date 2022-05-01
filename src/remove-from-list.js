@@ -22,56 +22,74 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
+
+//  class ListNode {
+//   constructor(x) {
+//     this.value = x;
+//     this.next = null;
+//   }
+// }
+// class Queue {
+//   constructor() {
+//     this.head = null;
+//     this.tail = null;
+//   }
+//   enqueue(value) {
+//     const node = new ListNode(value);
+//       if (this.head) {
+//         this.tail.next = node;
+//         this.tail = node;
+//       } else {
+//         this.head = node;
+//         this.tail = node;
+//       }
+//   }
+// }
+// function removeKFromList(list, elem) {
+//   let newList = new Queue();
+//   let arr = [];
+//   while (list) {
+//     arr.push(list.value);
+//     list = list.next;
+//   }
+//   arr = arr.filter(a => a!=elem);
+
+//   for (let i = 0; i < arr.length; i++) {
+//     newList.enqueue(arr[i]);
+//   }
+//   return newList.head;
+// }
+
+// function removeKFromList(list, elem) {
+//   function convertArrayToList(arr) {
+//     return arr.reverse().reduce((acc, cur) => {
+//       if (acc) {
+//         const node = new ListNode(cur);
+//         node.next = acc;
+//         return node;
+//       }
+//       return new ListNode(cur);
+//     }, null);
+//   }
+//   let arr = [];
+//   while (list) {
+//     if (list.value != elem) arr.push(list.value);
+//     list = list.next;
+//   }
+//   return convertArrayToList(arr);
+// }
+
 function removeKFromList(list, elem) {
-  class ListNode {
-    constructor(x) {
-      this.value = x;
-      this.next = null;
-    }
+  if (!list) return null;
+  if (list.value == elem) {
+    list = list.next; 
+    list = removeKFromList(list, elem);
+    return list;
+  } else {
+    list.next = removeKFromList(list.next, elem);
+    return list;
   }
-  class Queue {
-    constructor() {
-      this.head = null;
-      this.tail = null;
-    }
-    enqueue(value) {
-      const node = new ListNode(value);
-        if (this.head) {
-          this.tail.next = node;
-          this.tail = node;
-        } else {
-          this.head = node;
-          this.tail = node;
-        }
-    }
-  }  
-  let newList = new Queue();
-  // function convertArrayToList(arr) {
-  //   return arr.reverse().reduce((acc, cur) => {
-  //     if (acc) {
-  //       const node = new ListNode(cur);
-  //       node.next = acc;
-  //       return node;
-  //     }
-  
-  //     return new ListNode(cur);
-  //   }, null);
-  // }
-  
-  let arr = [];
-  while (list) {
-    arr.push(list.value);
-    list = list.next;
-  }
-  arr = arr.filter(a => a!=elem);
-
-  for (let i = 0; i < arr.length; i++) {
-    newList.enqueue(arr[i]);
-  }
-  // return convertArrayToList(arr);
-  return newList.head;
 }
-
 module.exports = {
   removeKFromList
 };
